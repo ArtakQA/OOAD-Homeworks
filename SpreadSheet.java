@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class SpreadSheet {
     private Cell[][] NewSheet;
 
@@ -5,12 +7,14 @@ public class SpreadSheet {
         NewSheet = new Cell[r][c];
     }
 
-    public void setNewSheet(int r, int c, Cell cl) {
+    public void setNewSheet(int r, int c, String value) {
         if (r >= 0 && c >= 0) {
             if (r < NewSheet.length && c < NewSheet[0].length) {
                 if (NewSheet[r][c] != null) {
                     NewSheet[r][c].reset();
                 }
+                StringCell cl = new StringCell();
+                cl.setValue(value);
                 NewSheet[r][c] = cl;
             } else {
                 throw new IllegalArgumentException("Row or Column index is out of range");
@@ -20,14 +24,14 @@ public class SpreadSheet {
         }
     }
 
-    public void setNewSheet(int r, int c, String str) {
+    public void setNewSheet(int r, int c, int value) {
         if (r >= 0 && c >= 0) {
             if (r < NewSheet.length && c < NewSheet[0].length) {
                 if (NewSheet[r][c] != null) {
                     NewSheet[r][c].reset();
                 }
-                Cell cl = new Cell();
-                cl.setValue(str);
+                IntCell cl = new IntCell();
+                cl.setValue(value);
                 NewSheet[r][c] = cl;
             } else {
                 throw new IllegalArgumentException("Row or Column index is out of range");
@@ -36,11 +40,46 @@ public class SpreadSheet {
             throw new IllegalArgumentException("Invalid row or column index, must be non-negative");
         }
     }
+
+    public void setNewSheet(int r, int c, double value) {
+        if (r >= 0 && c >= 0) {
+            if (r < NewSheet.length && c < NewSheet[0].length) {
+                if (NewSheet[r][c] != null) {
+                    NewSheet[r][c].reset();
+                }
+                DoubleCell cl = new DoubleCell();
+                cl.setValue(value);
+                NewSheet[r][c] = cl;
+            } else {
+                throw new IllegalArgumentException("Row or Column index is out of range");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid row or column index, must be non-negative");
+        }
+    }
+
+    public void setNewSheet(int r, int c, Date value) {
+        if (r >= 0 && c >= 0) {
+            if (r < NewSheet.length && c < NewSheet[0].length) {
+                if (NewSheet[r][c] != null) {
+                    NewSheet[r][c].reset();
+                }
+                DateCell cl = new DateCell();
+                cl.setValue(value);
+                NewSheet[r][c] = cl;
+            } else {
+                throw new IllegalArgumentException("Row or Column index is out of range");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid row or column index, must be non-negative");
+        }
+    }
+
     public void getNewSheet() {
         for (Cell[] cells : NewSheet) {
             for (int j = 0; j < NewSheet[0].length; j++) {
                 try {
-                    System.out.print(cells[j].getValue() + " ");
+                    System.out.print(cells[j].getStringValue() + " ");
                 } catch (NullPointerException e) {
                     System.out.print("null" + " ");
                 }
@@ -148,4 +187,3 @@ public class SpreadSheet {
         }
     }
 }
-
